@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
+using static System.Windows.Forms.LinkLabel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 using Timer = System.Windows.Forms.Timer;
 /*using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -60,6 +61,7 @@ namespace AutoTraffic
         private void buttonPause_Click(object sender, EventArgs e)
         {
             timer.Stop();
+            trigger = false;
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -75,7 +77,7 @@ namespace AutoTraffic
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            wid = ((pictureBox1.Height / (CountLines * CountWays)));
+            wid = ((pictureBox1.Height / (CountLines * CountWays)) - 20);
             if (!this.DesignMode)
             {
                 g = e.Graphics;
@@ -87,12 +89,12 @@ namespace AutoTraffic
                     {
                         for (int j = 0; j < CountLines * CountWays; j++)
                         {
-                            e.Graphics.FillEllipse(Brushes.Green, cars[j].cur_x, cars[j].cur_y, ((pictureBox1.Height / (CountLines * CountWays)) - 20), (pictureBox1.Height / (CountLines * CountWays)) - 20);
+                            e.Graphics.FillEllipse(Brushes.Green, cars[j].cur_x, cars[j].cur_y, wid, wid);
                         }
-                        e.Graphics.FillEllipse(Brushes.Red, x, y, ((pictureBox1.Height / (CountLines * CountWays)) - 20), (pictureBox1.Height / (CountLines * CountWays)) - 20);
+                        e.Graphics.FillEllipse(Brushes.Red, x, y, wid, wid);
                         if (x >= pictureBox1.Width / 8 || count > 0)
                         {
-                            e.Graphics.FillEllipse(Brushes.Blue, x1, y1, ((pictureBox1.Height / (CountLines * CountWays)) - 20), ((pictureBox1.Height / (CountLines * CountWays)) - 20));
+                            e.Graphics.FillEllipse(Brushes.Blue, x1, y1, wid, wid);
                         }
 
                         base.OnPaint(e);
@@ -116,10 +118,10 @@ namespace AutoTraffic
             {
                 if (x >= pictureBox1.Width / 8 || count > 0)
                 {
-                    if (((Math.Abs(x - x1) < wid + 20) && (Math.Abs(y1 - y) < wid)))
+                    if (((Math.Abs(x - x1) < wid + 20) && (Math.Abs(y1 - y) < wid + 20)))
                     {
                         x1 += speed_x - 1;
-                        if ((Math.Abs(y1 - y) < wid && CountLines > 1))
+                        if ((Math.Abs(y1 - y) < wid + 20 && CountLines > 1))
                         {
                             x1 += speed_x - 1;
                             y1++;
@@ -258,7 +260,7 @@ namespace AutoTraffic
             {
                 g.Clear(Color.Black);
                 int lines = CountLines;
-                MessageBox.Show(lines.ToString());
+                //MessageBox.Show(lines.ToString());
                 switch (roadType)
                 {
                     case "город":
@@ -270,9 +272,20 @@ namespace AutoTraffic
                             {
                                 Pen p1 = new Pen(Color.White, 4);
 
-                                g.DrawLine(p1, 0, (i * pictureBox1.Height / (lines * CountWays)) - 5, pictureBox1.Width, (i * pictureBox1.Height / (lines * CountWays)) - 5);
-                                g.DrawLine(p1, 0, (i * pictureBox1.Height / (lines * CountWays)) + 5, pictureBox1.Width, (i * pictureBox1.Height / (lines * CountWays)) + 5);
+                                var firstCoord = (i * pictureBox1.Height / (lines * CountWays)) - 5;
+                                var secondCoord = (i * pictureBox1.Height / (lines * CountWays)) + 5;
+
+                                g.DrawLine(p1, 0, firstCoord, pictureBox1.Width - 1, firstCoord);
+                                g.DrawLine(p1, 0, secondCoord, pictureBox1.Width - 1, secondCoord);
                                 continue;
+                            }
+                            else
+                            {
+                                for (int j = 1; j < 10; j++)
+                                {
+                                    var firstCoord = (i * pictureBox1.Height / (lines * CountWays)) - 5;
+                                    g.DrawLine(p, 0, firstCoord, (pictureBox1.Width / 9) * j, firstCoord);
+                                }
                             }
                             //g.DrawLine(p, 0, i * pictureBox1.Height / (lines * CountWays), pictureBox1.Width, i * pictureBox1.Height / (lines * CountWays));
                             //g.DrawLine(new Pen(Color.White, 4), pictureBox1.Width / 2, 0, pictureBox1.Width / 2, pictureBox1.Height);
