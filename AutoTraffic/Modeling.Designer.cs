@@ -59,6 +59,7 @@ namespace AutoTraffic
             this.buttonStop.TabIndex = 1;
             this.buttonStop.Text = "Стоп";
             this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
             // buttonPause
             // 
@@ -69,6 +70,7 @@ namespace AutoTraffic
             this.buttonPause.TabIndex = 2;
             this.buttonPause.Text = "Пауза";
             this.buttonPause.UseVisualStyleBackColor = true;
+            this.buttonPause.Click += new System.EventHandler(this.buttonPause_Click);
             // 
             // pictureBox1
             // 

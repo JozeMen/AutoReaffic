@@ -13,6 +13,14 @@ namespace AutoTraffic
 {
     public partial class Settings : Form
     {
+        private int timeApeare;
+
+
+        public int getTimeApeare
+        {
+            get { return timeApeare; }
+        }
+
         public Settings()
         {
             InitializeComponent();
@@ -33,6 +41,7 @@ namespace AutoTraffic
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            timeApeare = (int)numericUpDown1.Value;
             this.Close();
         }
     }

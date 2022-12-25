@@ -113,23 +113,23 @@ namespace AutoTraffic
             // 
             // pictureBoxDev
             // 
-            this.pictureBoxDev.Image = global::AutoTraffic.Properties.Resources.Безымянный2;
+            this.pictureBoxDev.Image = global::AutoTraffic.Properties.Resources.Безымянный21;
             this.pictureBoxDev.Location = new System.Drawing.Point(537, 31);
             this.pictureBoxDev.Name = "pictureBoxDev";
             this.pictureBoxDev.Size = new System.Drawing.Size(47, 37);
             this.pictureBoxDev.TabIndex = 20;
             this.pictureBoxDev.TabStop = false;
-            this.pictureBoxDev.MouseEnter += new System.EventHandler(this.pictureBoxDev_MouseEnter);
+            this.pictureBoxDev.Click += new System.EventHandler(this.pictureBoxDev_MouseEnter);
             // 
             // pictureBoxSys
             // 
-            this.pictureBoxSys.Image = global::AutoTraffic.Properties.Resources.Безымянный21;
+            this.pictureBoxSys.Image = global::AutoTraffic.Properties.Resources.Безымянный2;
             this.pictureBoxSys.Location = new System.Drawing.Point(12, 31);
             this.pictureBoxSys.Name = "pictureBoxSys";
             this.pictureBoxSys.Size = new System.Drawing.Size(42, 37);
             this.pictureBoxSys.TabIndex = 19;
             this.pictureBoxSys.TabStop = false;
-            this.pictureBoxSys.MouseEnter += new System.EventHandler(this.pictureBoxSys_MouseEnter);
+            this.pictureBoxSys.Click += new System.EventHandler(this.pictureBoxSys_MouseEnter);
             // 
             // labelLights
             // 
