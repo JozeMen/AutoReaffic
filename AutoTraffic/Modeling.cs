@@ -60,8 +60,9 @@ namespace AutoTraffic
 
         private void buttonPause_Click(object sender, EventArgs e)
         {
-            timer.Stop();
+            timer.Tick -= new EventHandler(timer1_FirestTick);
             trigger = false;
+            timer.Stop();
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -72,7 +73,10 @@ namespace AutoTraffic
             x = 0;
             x1 = -wid;
             y = 0;
-            y1 = 0; speed_x = 3; speed_x1 = 4; this.Refresh();
+            y1 = 0; 
+            speed_x = 3; 
+            speed_x1 = 4;
+            this.Refresh();
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -125,7 +129,6 @@ namespace AutoTraffic
                         {
                             x1 += speed_x - 1;
                             y1++;
-
                         }
                         else if (CountLines == 1)
                         {
@@ -157,9 +160,8 @@ namespace AutoTraffic
             {
                 cars[i].cur_x += 5;
             }
+
             this.Refresh();
-
-
         }
         private void timer1_SecondTick(object sender, EventArgs e)
         {
@@ -244,7 +246,6 @@ namespace AutoTraffic
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
             Form1 form1 = new Form1();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             cars = new Car[CountLines * CountWays];
