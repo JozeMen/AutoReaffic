@@ -21,6 +21,118 @@ namespace AutoTraffic
             get { return timeApeare; }
         }
 
+        /// <summary>
+        /// Детерминированное ли распределение.
+        /// </summary>
+        public bool IsDeterminate
+        {
+            get => checkBoxDet.Checked;
+        }
+
+        /// <summary>
+        /// Случайное ли распределение.
+        /// </summary>
+        public bool IsRandom
+        {
+            get => checkBoxRand.Checked;
+        }
+
+        /// <summary>
+        /// Детерминированный интервал генерации авто.
+        /// </summary>
+        public int DeterminateInterval
+        {
+            get => (int)numericUpDown1.Value;
+        }
+
+        /// <summary>
+        /// Выбранный закон распределения.
+        /// </summary>
+        public string Law
+        {
+            get => comboBoxRand_SV.SelectedItem.ToString();
+        }
+
+        /// <summary>
+        /// Интенсивность.
+        /// </summary>
+        public float Intensity
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(textBoxIntensity.Text))
+                {
+                    return float.NaN;
+                }
+
+                return float.Parse(textBoxIntensity.Text);
+            }
+        }
+
+        /// <summary>
+        /// Начальное значение интервала.
+        /// </summary>
+        public float StartInterval
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(textBoxStartInterval.Text))
+                {
+                    return float.NaN;
+                }
+
+                return float.Parse(textBoxStartInterval.Text);
+            }
+        }
+
+        /// <summary>
+        /// Конечное значение интервала.
+        /// </summary>
+        public float EndInterval
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(textBoxEndInterval.Text))
+                {
+                    return float.NaN;
+                }
+
+                return float.Parse(textBoxEndInterval.Text);
+            }
+        }
+
+        /// <summary>
+        /// Дисперсия.
+        /// </summary>
+        public float RandomDispersion
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(textBox_Rand_D.Text))
+                {
+                    return float.NaN;
+                }
+
+                return float.Parse(textBox_Rand_D.Text);
+            }
+        }
+
+        /// <summary>
+        /// Математическое ожидание.
+        /// </summary>
+        public float MathExpectation
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(textBoxRand_MO.Text))
+                {
+                    return float.NaN;
+                }
+
+                return float.Parse(textBoxRand_MO.Text);
+            }
+        }
+
         public Settings()
         {
             InitializeComponent();

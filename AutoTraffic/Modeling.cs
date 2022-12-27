@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace AutoTraffic
         private bool _isStopped = false;
 
         private Car[] cars;
-        private Car[] _reverseCars;
+        //private Car[] _reverseCars;
 
 
         int wid, y, y1, speed_x = 3, speed_x1 = 4;
@@ -36,6 +37,22 @@ namespace AutoTraffic
         int count = 0;
         int[] speed = { 30, 60, 90 };
         Timer timer = new Timer();
+
+        private bool _isDeterminate = false;
+        private bool _isRandom = false;
+
+        private string _law;
+
+        private int _determinateInterval;
+        private float _intensity;
+        private float _startInterval;
+        private float _endInterval;
+        private float _randomDispersion;
+        private float _mathExpectation;
+
+        private double _lengthBetweenCars = 0;
+
+        private List<List<Car>> _reverseCars;
 
         public string setRoaType
         {
@@ -61,7 +78,22 @@ namespace AutoTraffic
         private void buttonSet_Click(object sender, EventArgs e)
         {
             Settings sett_form = new Settings();
+            sett_form.FormClosed += new FormClosedEventHandler(SettingFormClosed);
             sett_form.ShowDialog();
+        }
+
+        public void SettingFormClosed(object sender, FormClosedEventArgs e)
+        {
+            var form = (Settings)sender;
+
+            _isDeterminate = form.IsDeterminate;
+            _isRandom = form.IsRandom;
+
+            _intensity = form.Intensity;
+            _startInterval = form.StartInterval;
+            _endInterval = form.EndInterval;
+            _randomDispersion= form.RandomDispersion;
+            _mathExpectation= form.MathExpectation;
         }
 
         private void buttonPause_Click(object sender, EventArgs e)
@@ -104,9 +136,12 @@ namespace AutoTraffic
                         {
                             //e.Graphics.FillEllipse(Brushes.Green, cars[j].cur_x, cars[j].cur_y, wid, wid);
                         }
-                        for (int j = 0; j < CountWays; j++)
+                        for (int j = 0; j < _reverseCars.Count; j++)
                         {
-                            e.Graphics.FillEllipse(Brushes.Aqua, _reverseCars[j].cur_x, _reverseCars[j].cur_y, wid, wid);
+                            foreach (var item in _reverseCars[j])
+                            {
+                                e.Graphics.FillEllipse(Brushes.Aqua, item.cur_x, item.cur_y, wid, wid);
+                            }
                         }
                         e.Graphics.FillEllipse(Brushes.Red, x, y, wid, wid);
                         if (x >= pictureBox1.Width / 8 || count > 0)
@@ -180,7 +215,7 @@ namespace AutoTraffic
         {
             int max = 1000;
             //x += speed_x; //неа, тут меняем ск-ть
-            for (int i = 0; i < _reverseCars.Length; i++)
+            /*for (int i = 0; i < _reverseCars.Length; i++)
             {
                 if (_reverseCars[i].cur_x < -wid - 100)
                 {
@@ -190,9 +225,66 @@ namespace AutoTraffic
                 {
                     _reverseCars[i].cur_x -= _reverseCars[i].speed;
                 }
+            }*/
+            for (int j = 0; j < _reverseCars.Count; j++)
+            {
+                foreach (var item in _reverseCars[j])
+                {
+                    if (item.cur_x > 2 * wid + 500 + (j * 100))
+                    {
+                        item.cur_x = item.start_x;
+                    }
+                    else
+                    {
+                        item.cur_x -= item.speed;
+                    }
+                }
             }
+
             this.Refresh();
         }
+
+        /// <summary>
+        /// Создать новую машину.
+        /// </summary>
+        /// <param name="x">Позиция Х.</param>
+        /// <param name="y">Позиция Y.</param>
+        /// <param name="index">Индекс полосы для генерации машины.</param>
+        private void GenerateCars(int x, int y, int index)
+        {
+            var positionX = 0f;
+
+            if (_isDeterminate)
+            {
+                positionX = (float)(5 / 0.03) * _intensity;
+            }
+            else if (_isRandom)
+            {
+                switch (_law)
+                {
+                    case "нормальное":
+                        break;
+                    case "равномерное":
+                        break;
+                    case "показательное":
+                        break;
+                }
+            }
+            else
+            { 
+                
+            }
+
+            var car = new Car(wid);
+            car.start_x = (int)(x - positionX);
+            car.cur_x = (int)(x - positionX);
+            car.start_y = y;
+            car.cur_y = y;
+            car.speed = 5;
+
+            _reverseCars[index].Add(car);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
@@ -201,16 +293,20 @@ namespace AutoTraffic
 
             if (!_isStopped)
             {
-                _reverseCars = new Car[CountWays];
+                _reverseCars = new List<List<Car>>();
 
                 for (int i = 0; i < CountWays; i++)
                 {
-                    _reverseCars[i] = new Car(wid);
-                    _reverseCars[i].start_x = wid + 500 + (i * 100);
-                    _reverseCars[i].cur_x = wid + 500 + (i * 100);
-                    _reverseCars[i].start_y = (i + 2) * 80;
-                    _reverseCars[i].cur_y = (i + 2) * 80;
-                    _reverseCars[i].speed = 5;
+                    _reverseCars[i] = new List<Car>();
+
+                    var car = new Car(wid);
+                    car.start_x = wid + 500 + (i * 100);
+                    car.cur_x = wid + 500 + (i * 100);
+                    car.start_y = (i + 2) * 80;
+                    car.cur_y = (i + 2) * 80;
+                    car.speed = 5;
+
+                    _reverseCars[i].Add(car);
                 }
             }
 
