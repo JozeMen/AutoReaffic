@@ -24,7 +24,10 @@ namespace AutoTraffic
         private string roadType;
         private bool trigger = false;
 
+        private bool _isStopped = false;
+
         private Car[] cars;
+        private Car[] _reverseCars;
 
 
         int wid, y, y1, speed_x = 3, speed_x1 = 4;
@@ -60,7 +63,10 @@ namespace AutoTraffic
 
         private void buttonPause_Click(object sender, EventArgs e)
         {
+            _isStopped = true;
+
             timer.Tick -= new EventHandler(timer1_FirestTick);
+            timer.Tick -= new EventHandler(timer1_SecondTick);
             trigger = false;
             timer.Stop();
         }
@@ -91,9 +97,13 @@ namespace AutoTraffic
                 {
                     for (int i = 0; i < CountLines * CountWays; i++)
                     {
-                        for (int j = 0; j < CountLines * CountWays; j++)
+                        for (int j = 0; j < CountWays; j++)
                         {
-                            e.Graphics.FillEllipse(Brushes.Green, cars[j].cur_x, cars[j].cur_y, wid, wid);
+                            //e.Graphics.FillEllipse(Brushes.Green, cars[j].cur_x, cars[j].cur_y, wid, wid);
+                        }
+                        for (int j = 0; j < CountWays; j++)
+                        {
+                            e.Graphics.FillEllipse(Brushes.Aqua, _reverseCars[j].cur_x, _reverseCars[j].cur_y, wid, wid);
                         }
                         e.Graphics.FillEllipse(Brushes.Red, x, y, wid, wid);
                         if (x >= pictureBox1.Width / 8 || count > 0)
@@ -158,41 +168,14 @@ namespace AutoTraffic
             x += speed_x; //неа, тут меняем ск-ть
             for (int i = 0; i < cars.Length; i++)
             {
-                cars[i].cur_x += 5;
+                //cars[i].cur_x += 5;
             }
 
             this.Refresh();
         }
         private void timer1_SecondTick(object sender, EventArgs e)
         {
-            /*for (int i = 0; i < cars.Length; i++)
-            {
-                if (cars[i].cur_x >= pictureBox1.Width / 8 || count > 0)
-                {
-                    if (((Math.Abs(x - x1) < wid + 20) && (Math.Abs(y1 - y) < wid)))
-                    {
-                        x1 += speed_x - 1;
-                        if ((Math.Abs(y1 - y) < wid && CountLines > 1))
-                        {
-                            x1 += speed_x - 1;
-                            y1++;
-
-                        }
-                        else if (CountLines == 1)
-                        {
-                            x1 += --speed_x1;
-                            decrease++;
-                        }
-
-                    }
-                    else
-                    {
-                        speed_x1 = speed_x + 5;
-                        x1 += speed_x1;
-                    }
-                }
-            }
-            int decrease = 0;
+            /*int decrease = 0;
             if (!trigger)
             {
 
@@ -232,31 +215,55 @@ namespace AutoTraffic
                 {
                     x1 = 0;
                 }
-            }
+            }*/
 
             int max = 1000;
-            x += speed_x; //неа, тут меняем ск-ть
-            for (int i = 0; i < cars.Length; i++)
+            //x += speed_x; //неа, тут меняем ск-ть
+            for (int i = 0; i < _reverseCars.Length; i++)
             {
-                cars[i].start_x += 5;
+                if (_reverseCars[i].cur_x < -wid - 100)
+                {
+                    _reverseCars[i].cur_x = _reverseCars[i].start_x;
+                }
+                else
+                {
+                    _reverseCars[i].cur_x -= 5;
+                }
             }
             this.Refresh();
-*/
 
         }
         private void button1_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            cars = new Car[CountLines * CountWays];
-            for (int i = 0; i < CountLines * CountWays; i++)
+            cars = new Car[CountWays];
+
+            /*for (int i = 0; i < CountWays; i++)
             {
                 cars[i] = new Car(wid);
                 cars[i].start_x = -wid - (i * 100);
                 cars[i].cur_x = -wid - (i * 100);
                 cars[i].start_y = i * 100;
                 cars[i].cur_y = i * 100;
+            }*/
+
+            if (!_isStopped)
+            {
+                _reverseCars = new Car[CountWays];
+
+                for (int i = 0; i < CountWays; i++)
+                {
+                    _reverseCars[i] = new Car(wid);
+                    _reverseCars[i].start_x = wid + 500 + (i * 100);
+                    _reverseCars[i].cur_x = wid + 500 + (i * 100);
+                    _reverseCars[i].start_y = (i + 2) * 80;
+                    _reverseCars[i].cur_y = (i + 2) * 80;
+                }
             }
+
+            _isStopped = false;
+
             using (g = Graphics.FromImage(pictureBox1.Image))
             {
                 g.Clear(Color.Black);
