@@ -44,5 +44,56 @@ namespace AutoTraffic
             timeApeare = (int)numericUpDown1.Value;
             this.Close();
         }
+
+        private void comboBoxRand_SV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var law = comboBoxRand_SV.SelectedItem.ToString();
+
+            switch (law)
+            {
+                case "нормальное":
+                    SetUnvisibleTextBoxes();
+
+                    label2.Text = "Укажите значение дисперсии";
+                    label3.Text = "Укажите значение математического ожидания";
+
+                    textBox_Rand_D.Visible = true;
+                    textBoxRand_MO.Visible = true;
+                    break;
+                case "равномерное":
+                    SetUnvisibleTextBoxes();
+
+                    label2.Text = "Начальное значение интервала";
+                    label3.Text = "Конечное значение интервала";
+
+                    textBoxStartInterval.Visible = true;
+                    textBoxEndInterval.Visible = true;
+                    break;
+                case "показательное":
+                    SetUnvisibleTextBoxes();
+
+                    label2.Text = "Укажите значение интенсивности";
+                    
+                    label3.Visible = false;
+
+                    textBoxIntensity.Visible = true;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Скрыть все textBox'ы в группе со случайным распределением.
+        /// </summary>
+        private void SetUnvisibleTextBoxes()
+        {
+            label2.Visible = true;
+            label3.Visible = true;
+
+            textBoxIntensity.Visible = false;
+            textBoxStartInterval.Visible = false;
+            textBoxEndInterval.Visible = false;
+            textBox_Rand_D.Visible = false;
+            textBoxRand_MO.Visible = false;
+        }
     }
 }

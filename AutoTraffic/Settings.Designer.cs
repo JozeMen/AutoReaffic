@@ -42,6 +42,9 @@
             this.checkBoxDet = new System.Windows.Forms.RadioButton();
             this.checkBoxRand = new System.Windows.Forms.RadioButton();
             this.groupBoxDet = new System.Windows.Forms.GroupBox();
+            this.textBoxStartInterval = new System.Windows.Forms.TextBox();
+            this.textBoxEndInterval = new System.Windows.Forms.TextBox();
+            this.textBoxIntensity = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBoxRand.SuspendLayout();
             this.groupBoxDet.SuspendLayout();
@@ -129,10 +132,11 @@
             // comboBoxRand_SV
             // 
             this.comboBoxRand_SV.FormattingEnabled = true;
-            this.comboBoxRand_SV.Location = new System.Drawing.Point(412, 4);
+            this.comboBoxRand_SV.Location = new System.Drawing.Point(401, 4);
             this.comboBoxRand_SV.Name = "comboBoxRand_SV";
-            this.comboBoxRand_SV.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxRand_SV.Size = new System.Drawing.Size(132, 24);
             this.comboBoxRand_SV.TabIndex = 31;
+            this.comboBoxRand_SV.SelectedIndexChanged += new System.EventHandler(this.comboBoxRand_SV_SelectedIndexChanged);
             // 
             // groupBoxRand
             // 
@@ -141,7 +145,10 @@
             this.groupBoxRand.Controls.Add(this.label3);
             this.groupBoxRand.Controls.Add(this.label2);
             this.groupBoxRand.Controls.Add(this.label1);
+            this.groupBoxRand.Controls.Add(this.textBoxEndInterval);
             this.groupBoxRand.Controls.Add(this.textBox_Rand_D);
+            this.groupBoxRand.Controls.Add(this.textBoxStartInterval);
+            this.groupBoxRand.Controls.Add(this.textBoxIntensity);
             this.groupBoxRand.Location = new System.Drawing.Point(527, 42);
             this.groupBoxRand.Name = "groupBoxRand";
             this.groupBoxRand.Size = new System.Drawing.Size(544, 115);
@@ -182,6 +189,30 @@
             this.groupBoxDet.TabIndex = 34;
             this.groupBoxDet.TabStop = false;
             // 
+            // textBoxStartInterval
+            // 
+            this.textBoxStartInterval.Location = new System.Drawing.Point(401, 47);
+            this.textBoxStartInterval.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxStartInterval.Name = "textBoxStartInterval";
+            this.textBoxStartInterval.Size = new System.Drawing.Size(132, 22);
+            this.textBoxStartInterval.TabIndex = 22;
+            // 
+            // textBoxEndInterval
+            // 
+            this.textBoxEndInterval.Location = new System.Drawing.Point(401, 82);
+            this.textBoxEndInterval.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxEndInterval.Name = "textBoxEndInterval";
+            this.textBoxEndInterval.Size = new System.Drawing.Size(132, 22);
+            this.textBoxEndInterval.TabIndex = 22;
+            // 
+            // textBoxIntensity
+            // 
+            this.textBoxIntensity.Location = new System.Drawing.Point(401, 47);
+            this.textBoxIntensity.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxIntensity.Name = "textBoxIntensity";
+            this.textBoxIntensity.Size = new System.Drawing.Size(132, 22);
+            this.textBoxIntensity.TabIndex = 22;
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -220,5 +251,8 @@
         private System.Windows.Forms.RadioButton checkBoxDet;
         private System.Windows.Forms.RadioButton checkBoxRand;
         private System.Windows.Forms.GroupBox groupBoxDet;
+        private System.Windows.Forms.TextBox textBoxStartInterval;
+        private System.Windows.Forms.TextBox textBoxEndInterval;
+        private System.Windows.Forms.TextBox textBoxIntensity;
     }
 }

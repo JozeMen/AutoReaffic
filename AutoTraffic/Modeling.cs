@@ -175,48 +175,6 @@ namespace AutoTraffic
         }
         private void timer1_SecondTick(object sender, EventArgs e)
         {
-            /*int decrease = 0;
-            if (!trigger)
-            {
-
-            }
-            else
-            {
-                if (x >= pictureBox1.Width / 8 || count > 0)
-                {
-                    if (((Math.Abs(x - x1) < wid + 20) && (Math.Abs(y1 - y) < wid)))
-                    {
-                        x1 += speed_x - 1;
-                        if ((Math.Abs(y1 - y) < wid && CountLines > 1))
-                        {
-                            x1 += speed_x - 1;
-                            y1++;
-
-                        }
-                        else if (CountLines == 1)
-                        {
-                            x1 += --speed_x1;
-                            decrease++;
-                        }
-
-                    }
-                    else
-                    {
-                        speed_x1 = speed_x + 5;
-                        x1 += speed_x1;
-                    }
-                }
-                if (x > pictureBox1.Width + wid)
-                {
-                    count = 1;
-                    x = 0;
-                }
-                if (x1 > pictureBox1.Width + wid)
-                {
-                    x1 = 0;
-                }
-            }*/
-
             int max = 1000;
             //x += speed_x; //неа, тут меняем ск-ть
             for (int i = 0; i < _reverseCars.Length; i++)
@@ -227,26 +185,16 @@ namespace AutoTraffic
                 }
                 else
                 {
-                    _reverseCars[i].cur_x -= 5;
+                    _reverseCars[i].cur_x -= _reverseCars[i].speed;
                 }
             }
             this.Refresh();
-
         }
         private void button1_Click(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             cars = new Car[CountWays];
-
-            /*for (int i = 0; i < CountWays; i++)
-            {
-                cars[i] = new Car(wid);
-                cars[i].start_x = -wid - (i * 100);
-                cars[i].cur_x = -wid - (i * 100);
-                cars[i].start_y = i * 100;
-                cars[i].cur_y = i * 100;
-            }*/
 
             if (!_isStopped)
             {
@@ -259,6 +207,7 @@ namespace AutoTraffic
                     _reverseCars[i].cur_x = wid + 500 + (i * 100);
                     _reverseCars[i].start_y = (i + 2) * 80;
                     _reverseCars[i].cur_y = (i + 2) * 80;
+                    _reverseCars[i].speed = 5;
                 }
             }
 
@@ -268,7 +217,7 @@ namespace AutoTraffic
             {
                 g.Clear(Color.Black);
                 int lines = CountLines;
-                //MessageBox.Show(lines.ToString());
+               
                 switch (roadType)
                 {
                     case "город":
@@ -295,8 +244,6 @@ namespace AutoTraffic
                                     g.DrawLine(p, 0, firstCoord, (pictureBox1.Width / 9) * j, firstCoord);
                                 }
                             }
-                            //g.DrawLine(p, 0, i * pictureBox1.Height / (lines * CountWays), pictureBox1.Width, i * pictureBox1.Height / (lines * CountWays));
-                            //g.DrawLine(new Pen(Color.White, 4), pictureBox1.Width / 2, 0, pictureBox1.Width / 2, pictureBox1.Height);
                         }
                         break;
                     case "загород":
