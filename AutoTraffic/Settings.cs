@@ -25,7 +25,9 @@ namespace AutoTraffic
         {
             InitializeComponent();
             comboBoxRand_SV.Items.AddRange(new string[] { "нормальное", "равномерное", "показательное" });
-
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
         private void checkBoxDet_Click (object sender, EventArgs e)
         {

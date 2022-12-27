@@ -40,6 +40,9 @@ namespace AutoTraffic
             numericUpDownLights.ReadOnly = true;
 */            comboBox1.Items.AddRange(new string[] { "город", "загород", "тоннель" });
             comboBox1.SelectedItem = "город";
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
